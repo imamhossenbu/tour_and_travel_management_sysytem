@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/* Custom Navigation Buttons */
+.custom-prev,
+.custom-next {
+  z-index: 10;
+}
+
+.custom-prev:hover,
+.custom-next:hover {
+  transform: scale(1.1);
+}
+
+/* Custom Swiper pagination dots */
+.swiper-pagination-bullet {
+  background-color: #64748b !important;
+  opacity: 0.5 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #3b82f6 !important;
+  opacity: 1 !important;
+}
+
+
