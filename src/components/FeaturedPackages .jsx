@@ -1,22 +1,23 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import useAxiosPublic from '../Hooks/useAxiosPublic';
+import { NavLink } from 'react-router-dom';
 
 const FeaturedPackages = () => {
-  const [data,setData] = useState([]);
+  const [data, setData] = useState([]);
   const axiosPublic = useAxiosPublic();
 
-  useEffect(()=>{
+  useEffect(() => {
     axiosPublic.get('/packages')
-    .then(res=>{
-      setData(res.data.data)
-    })
-  },[axiosPublic])
+      .then(res => {
+        setData(res.data.data)
+      })
+  }, [axiosPublic])
 
 
   return (
     <div className="py-16 bg-gray-100 text-center">
-      <motion.h2 
+      <motion.h2
         className="text-4xl font-bold text-gray-800 mb-8"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -30,7 +31,7 @@ const FeaturedPackages = () => {
       </p>
 
       <div className="grid md:grid-cols-3 gap-8 container mx-auto px-6 md:px-12">
-        {data.slice(0,6).map((pkg, index) => (
+        {data.slice(0, 6).map((pkg, index) => (
           <motion.div
             key={pkg.id}
             className="relative group overflow-hidden rounded-lg shadow-lg bg-white"
@@ -51,9 +52,11 @@ const FeaturedPackages = () => {
                 <span className="text-lg font-semibold text-blue-600">${pkg.price}</span>
                 <span className="text-sm text-gray-500">{pkg.duration} days</span>
               </div>
-              <button className="mt-4 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full transition duration-300">
-                Learn More
-              </button>
+              <NavLink to={`/package-details/${pkg.id}`}>
+                <button className="mt-4 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full transition duration-300">
+                  Learn More
+                </button>
+              </NavLink>
             </div>
           </motion.div>
         ))}
@@ -66,8 +69,8 @@ const FeaturedPackages = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <a 
-          href="/packages" 
+        <a
+          href="/packages"
           className="bg-orange-500 hover:bg-orange-600 text-white text-lg font-semibold py-3 px-8 rounded-full transition-all duration-300 shadow-lg"
         >
           View All Packages

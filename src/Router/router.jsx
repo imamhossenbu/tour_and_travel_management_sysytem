@@ -12,6 +12,8 @@ import AllUsers from "../Pages/Dashboard/Admins/AllUsers";
 import AddDestination from "../Pages/Dashboard/Admins/AddDestination";
 import AddPackages from "../Pages/Dashboard/Admins/AddPackages";
 import DestinationDetails from "../Pages/DestinationDetails";
+import AddItinerary from "../Pages/Dashboard/Admins/AddItinerary";
+import PackageDetails from "../Pages/PackageDetails";
 
 export const router = createBrowserRouter([
     {
@@ -40,6 +42,10 @@ export const router = createBrowserRouter([
                 element: <DestinationDetails></DestinationDetails>
             },
             {
+                path:'/package-details/:id',
+                element:<PackageDetails></PackageDetails>
+            },
+            {
                 path: '/sign-up',
                 element: <SignUp></SignUp>
             },
@@ -65,6 +71,10 @@ export const router = createBrowserRouter([
                 path: 'add-packages',
                 element: <AddPackages></AddPackages>
             },
+            {
+                path:'add-itinerary',
+                element:<AddItinerary></AddItinerary>
+            }
           
         ]
     }

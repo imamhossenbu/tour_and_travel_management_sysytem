@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { FaBars, FaSignOutAlt, FaListAlt, FaHeart, FaHistory, FaStar, FaPlus, FaUsers, FaCommentsDollar, FaClipboardList, FaMoneyCheckAlt, FaBoxOpen, FaMapMarkerAlt, FaHome, FaSuitcase, FaBook, FaPhone } from "react-icons/fa";
+import { FaBars, FaSignOutAlt, FaListAlt, FaHeart, FaHistory, FaStar, FaPlus, FaUsers, FaCommentsDollar, FaClipboardList, FaMoneyCheckAlt, FaBoxOpen, FaMapMarkerAlt, FaHome, FaSuitcase, FaBook, FaPhone, FaCalendarPlus } from "react-icons/fa";
 import { motion } from "framer-motion";
 import useAdmin from "../../Hooks/useAdmin";
 import { AuthContext } from "../../context/AuthContext";
@@ -96,6 +96,10 @@ const Dashboard = () => {
                             <NavLink to="add-destination" className={linkClasses}>
                                 <FaMapMarkerAlt />
                                 <span>Add Destinations</span>
+                            </NavLink>
+                            <NavLink to="add-itinerary" className={linkClasses}>
+                                <FaCalendarPlus />
+                                <span>Add Itinerary</span>
                             </NavLink>
                         </nav>
                     </>
@@ -198,6 +202,10 @@ const Dashboard = () => {
                             <NavLink to="add-destination" className={linkClasses}>
                                 <FaMapMarkerAlt />
                                 <span>Add Destinations</span>
+                            </NavLink>
+                            <NavLink to="add-itinerary" className={linkClasses}>
+                                <FaCalendarPlus />
+                                <span>Add Itinerary</span>
                             </NavLink>
                         </nav>
                     </>

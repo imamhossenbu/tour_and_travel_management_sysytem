@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
@@ -116,9 +116,11 @@ const DestinationDetails = () => {
                 <span className="text-lg font-semibold text-blue-600">${pkg.price}</span>
                 <span className="text-sm text-gray-500">{pkg.duration} days</span>
               </div>
-              <button className="mt-4 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full transition duration-300">
-                Learn More
-              </button>
+              <NavLink to={`/package-details/${pkg.id}`}>
+                <button className="mt-4 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full transition duration-300">
+                  Learn More
+                </button>
+              </NavLink>
             </div>
           </motion.div>
         ))}
