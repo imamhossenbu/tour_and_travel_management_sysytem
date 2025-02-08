@@ -15,9 +15,7 @@ const ContactPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
                     {/* Left Side - Contact Form */}
-                    <motion.div className="bg-white p-8 rounded-lg shadow-lg"
-                        whileHover={{ scale: 1.05 }}
-                    >
+                    <motion.div className="bg-white p-8 rounded-lg shadow-lg">
                         <h3 className="text-2xl font-semibold text-gray-700 mb-6">Send Us a Message</h3>
                         <form className="space-y-6">
                             <div>

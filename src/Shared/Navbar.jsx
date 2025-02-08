@@ -1,25 +1,47 @@
-import { useContext, useState } from 'react';
+import { useContext,  useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaBars, FaTimes, FaHome, FaSuitcase, FaPhone, FaBook } from 'react-icons/fa';
+import { FaBars, FaTimes, FaHome, FaSuitcase, FaPhone, FaBook, FaShoppingCart } from 'react-icons/fa';
 import { AuthContext } from '../context/AuthContext';
 import { toast } from 'react-toastify';
+// import useAxiosPublic from '../Hooks/useAxiosPublic';
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext)
+  const { user, logOut , carts} = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
+  // const [carts, setCarts] = useState(0);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
+  // const axiosPublic = useAxiosPublic();
 
+  console.log(user);
+  // const fetchWishlist = () => {
+  //   if (user?.uid) {  
+  //     axiosPublic.get(`/wishlist/${user.uid}`)
+  //       .then((res) => {
+  //         setCarts(res.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching wishlist:", error);
+  //       });
+  //   }
+  // };
+  
+  // // Call `fetchWishlist` on component mount and when `user.uid` changes
+  // useEffect(() => {
+  //   fetchWishlist();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [user?.uid]);
+  
+
+  console.log(carts);
 
   const handleLogOut = () => {
     logOut()
       .then(() => {
-        navigate('/')
-        toast('log out successful')
-      })
-  }
-  // Dummy user data (replace with authentication logic)
-
+        navigate('/');
+        toast('Log out successful');
+      });
+  };
 
   // Navigation menu items
   const navLinks = [
@@ -58,7 +80,20 @@ const Navbar = () => {
               </NavLink>
             ))}
           </div>
+
+          {/* Right Section: Cart + User Profile */}
           <div className="relative flex items-center space-x-6">
+            {user && (
+              <NavLink to="/cart" className="relative text-white hover:text-yellow-300 transition-all duration-300">
+                <FaShoppingCart className="h-8 w-8" />
+                {carts?.length >= 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-2 py-1">
+                    {carts.length}
+                  </span>
+                )}
+              </NavLink>
+            )}
+
             {!user ? (
               <NavLink
                 to="/login"
@@ -67,12 +102,9 @@ const Navbar = () => {
                 Login
               </NavLink>
             ) : (
-              <div
-                className="relative cursor-pointer"
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-              >
+              <div className="relative cursor-pointer" onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
                 <img
-                  src={user && user.photoURL}
+                  src={user?.photoURL}
                   alt="User"
                   className="h-12 w-12 rounded-full border-2 border-yellow-300"
                 />
@@ -127,6 +159,18 @@ const Navbar = () => {
               {link.label}
             </NavLink>
           ))}
+
+          {user && (
+            <NavLink to="/cart" className="relative text-white hover:text-yellow-300 transition-all duration-300">
+              <FaShoppingCart className="h-8 w-8" />
+              {carts?.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-2 py-1">
+                  {carts.length}
+                </span>
+              )}
+            </NavLink>
+          )}
+
           {!user ? (
             <NavLink
               to="/login"
@@ -138,7 +182,7 @@ const Navbar = () => {
           ) : (
             <div className="text-center">
               <img
-                src={user.photo}
+                src={user?.photoURL}
                 alt="User"
                 className="h-12 w-12 rounded-full border-2 border-yellow-300 mx-auto mb-4"
               />
@@ -150,8 +194,8 @@ const Navbar = () => {
                 Dashboard
               </NavLink>
               <button
-                onClick={() => handleLogOut}
-                className="block w-full text-white py-2  hover:text-red-400"
+                onClick={handleLogOut}
+                className="block w-full text-white py-2 hover:text-red-400"
               >
                 Logout
               </button>

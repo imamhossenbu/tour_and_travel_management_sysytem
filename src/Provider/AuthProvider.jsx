@@ -3,12 +3,43 @@ import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider,
 import { auth } from "../../firebase.config";
 import { AuthContext } from "../context/AuthContext";
 import { useEffect, useState } from "react";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [carts ,setCarts] = useState([]);
+    const axiosPublic = useAxiosPublic();
+
+
+    const fetchWishlist = (userId) => {
+        if (userId) {
+            axiosPublic.get(`/wishlist/${userId}`)
+                .then((res) => setCarts(res.data))
+                .catch((error) => console.error("Error fetching wishlist:", error));
+        }
+    };
+
+    // ✅ Add to wishlist and update state immediately
+    const addToWishlist = (packageId) => {
+        if (!user?.uid) return;
+
+        const wishlistData = { uid: user?.uid };
+
+        axiosPublic.post(`/wishlist/${packageId}`, wishlistData)
+            .then(() => {
+                setCarts([...carts, { id: packageId, uid: user?.uid }]); // ✅ Update UI instantly
+            })
+            .catch((err) => console.error("Error adding to wishlist:", err));
+    };
+
+    useEffect(() => {
+        if (user?.uid) {
+            fetchWishlist(user.uid);
+        }
+    }, [user?.uid]);
 
 
     const loginUser = (email, password) => {
@@ -63,7 +94,9 @@ const AuthProvider = ({ children }) => {
         logOut,
         googleSignIn,
         githubLogin,
-        updateUser
+        updateUser,
+        addToWishlist,
+        carts
     }
     return (
         <AuthContext.Provider value={userInfo}>
