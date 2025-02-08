@@ -62,7 +62,7 @@ const Navbar = () => {
           {/* Right Section: Cart + User Profile */}
           <div className="relative flex items-center space-x-6">
             {user && (
-              <NavLink to="/cart" className="relative text-white hover:text-yellow-300 transition-all duration-300">
+              <NavLink to="/dashboard/wishlist" className="relative text-white hover:text-yellow-300 transition-all duration-300">
                 <FaShoppingCart className="h-8 w-8" />
                 {carts?.length >= 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-2 py-1">
@@ -139,9 +139,9 @@ const Navbar = () => {
           ))}
 
           {user && (
-            <NavLink to="/cart" className="relative text-white hover:text-yellow-300 transition-all duration-300">
+            <NavLink to="/dashboard/wishlist" className="relative text-white hover:text-yellow-300 transition-all duration-300">
               <FaShoppingCart className="h-8 w-8" />
-              {carts?.length > 0 && (
+              {carts?.length >= 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-2 py-1">
                   {carts.length}
                 </span>

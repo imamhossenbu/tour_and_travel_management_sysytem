@@ -16,6 +16,12 @@ import AddItinerary from "../Pages/Dashboard/Admins/AddItinerary";
 import PackageDetails from "../Pages/PackageDetails";
 import AllReviews from "../Pages/Dashboard/Admins/AllReviews";
 import MyWishList from "../Pages/Dashboard/Users/MyWishList";
+import MyReviews from "../Pages/Dashboard/Users/MyReviews";
+import MyBookings from "../Pages/Dashboard/Users/MyBookings";
+import AllBookings from "../Pages/Dashboard/Admins/AllBookings";
+import PaymentPage from "../Pages/Dashboard/PaymentPage";
+import AllPayments from "../Pages/Dashboard/Admins/AllPayments";
+import MyPayments from "../Pages/Dashboard/Users/MyPayments";
 
 export const router = createBrowserRouter([
     {
@@ -54,6 +60,10 @@ export const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <LogIn></LogIn>
+            },
+            {
+                path:'/payment/:bookingId',
+                element:<PaymentPage></PaymentPage>
             }
         ]
     },
@@ -66,8 +76,25 @@ export const router = createBrowserRouter([
                 element:<MyWishList></MyWishList>
             },
             {
+                path:'my-reviews',
+                element:<MyReviews></MyReviews>
+            },
+            {
+                path:'my-bookings',
+                element:<MyBookings></MyBookings>
+            },
+            {
+                path:'my-payments',
+                element:<MyPayments></MyPayments>
+            },
+           
+            {
                 path: 'users',
                 element: <AllUsers></AllUsers>
+            },
+            {
+                path:'all-bookings',
+                element:<AllBookings></AllBookings>
             },
             {
                 path: 'add-destination',
@@ -84,6 +111,10 @@ export const router = createBrowserRouter([
             {
                 path:'all-reviews',
                 element:<AllReviews></AllReviews>
+            },
+            {
+                path:'all-payments',
+                element:<AllPayments></AllPayments>
             }
           
         ]

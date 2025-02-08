@@ -57,7 +57,7 @@ const MyWishList = () => {
             confirmButtonText: "Pay Now"
         }).then((result) => {
             if (result.isConfirmed) {
-                navigate(`/payment/${id}`); // ✅ Redirect to payment page
+                navigate(`/dashboard/payment/${id}`); // ✅ Redirect to payment page
             }
         });
     };

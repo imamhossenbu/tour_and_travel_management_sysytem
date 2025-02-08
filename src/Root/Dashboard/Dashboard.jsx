@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { FaBars, FaSignOutAlt, FaListAlt, FaHeart, FaHistory, FaStar, FaUsers, FaClipboardList, FaMoneyCheckAlt, FaBoxOpen, FaMapMarkerAlt, FaHome, FaSuitcase, FaBook, FaPhone, FaCalendarPlus } from "react-icons/fa";
+import { FaBars, FaSignOutAlt, FaListAlt, FaHeart, FaHistory, FaStar, FaUsers, FaClipboardList, FaMoneyCheckAlt, FaBoxOpen, FaMapMarkerAlt, FaHome, FaSuitcase, FaBook, FaPhone, FaCalendarPlus, FaUserShield, FaUser, FaTimes } from "react-icons/fa";
 import { motion } from "framer-motion";
 import useAdmin from "../../Hooks/useAdmin";
 import { AuthContext } from "../../context/AuthContext";
@@ -12,14 +12,15 @@ const Dashboard = () => {
     const { isAdmin } = useAdmin();
     const { logOut } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [showAdminDashboard, setShowAdminDashboard] = useState(true); // ✅ Toggle between Admin & User Dashboard
 
     const handleLogOut = () => {
         logOut()
             .then(() => {
-                Swal.fire('Log out successful')
+                Swal.fire('Log out successful');
                 navigate('/');
-            })
-    }
+            });
+    };
 
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
@@ -37,14 +38,23 @@ const Dashboard = () => {
                 <title>Dashboard || TravelGo</title>
             </Helmet>
 
-            {/* Sidebar for Medium to Large Screens */}
+            {/* ✅ Sidebar for Medium to Large Screens */}
             <aside className="hidden md:flex flex-col w-64 bg-blue-900 text-white p-5 space-y-6">
                 <h2 className="text-2xl font-bold text-center mb-4">Dashboard</h2>
 
-                {/* Shared Links (Visible for both Admin and User) */}
+                {/* ✅ Toggle Admin/User Dashboard (Only Visible to Admins) */}
+                {isAdmin && (
+                    <button
+                        className="flex items-center justify-center p-3 bg-yellow-500 text-black rounded-lg hover:bg-yellow-600 transition"
+                        onClick={() => setShowAdminDashboard(!showAdminDashboard)}
+                    >
+                        {showAdminDashboard ? <FaUser className="mr-2" /> : <FaUserShield className="mr-2" />}
+                        {showAdminDashboard ? "Go to User Dashboard" : "Go to Admin Dashboard"}
+                    </button>
+                )}
 
-                {/* Conditionally Render User Links if not Admin */}
-                {!isAdmin && (
+                {/* ✅ User Dashboard Links */}
+                {!isAdmin || !showAdminDashboard ? (
                     <>
                         <h3 className="text-lg font-semibold text-gray-400 mt-4">User Links</h3>
                         <nav className="flex flex-col space-y-4">
@@ -52,7 +62,7 @@ const Dashboard = () => {
                                 <FaListAlt />
                                 <span>My Booking</span>
                             </NavLink>
-                            <NavLink to="payment-history" className={linkClasses}>
+                            <NavLink to="my-payments" className={linkClasses}>
                                 <FaHistory />
                                 <span>Payment History</span>
                             </NavLink>
@@ -66,10 +76,7 @@ const Dashboard = () => {
                             </NavLink>
                         </nav>
                     </>
-                )}
-
-                {/* Conditionally Render Admin Links if Admin */}
-                {isAdmin && (
+                ) : (
                     <>
                         <h3 className="text-lg font-semibold text-gray-400 mt-4">Admin Links</h3>
                         <nav className="flex flex-col space-y-4">
@@ -80,6 +87,10 @@ const Dashboard = () => {
                             <NavLink to="all-reviews" className={linkClasses}>
                                 <FaClipboardList />
                                 <span>All Reviews</span>
+                            </NavLink>
+                            <NavLink to="all-bookings" className={linkClasses}>
+                                <FaClipboardList />
+                                <span>All Bookings</span>
                             </NavLink>
                             <NavLink to="all-payments" className={linkClasses}>
                                 <FaMoneyCheckAlt />
@@ -100,6 +111,8 @@ const Dashboard = () => {
                         </nav>
                     </>
                 )}
+
+                {/* ✅ Shared Links */}
                 <h3 className="text-lg font-semibold text-gray-400">Shared Links</h3>
                 <nav className="flex flex-col space-y-4">
                     <NavLink to="/" className={linkClasses}>
@@ -126,14 +139,7 @@ const Dashboard = () => {
                 </NavLink>
             </aside>
 
-            {/* Drawer for Small Screens */}
-            <div className="md:hidden fixed top-0 left-0 w-full flex items-center p-4 bg-blue-900 text-white shadow-md">
-                <button onClick={toggleDrawer} className="text-white text-2xl">
-                    <FaBars />
-                </button>
-                <h2 className="text-lg font-bold ml-4">Dashboard</h2>
-            </div>
-
+            {/* ✅ Drawer for Small Screens (Now Shows All Links) */}
             <motion.div
                 initial={{ x: "-100%" }}
                 animate={{ x: isDrawerOpen ? "0%" : "-100%" }}
@@ -141,17 +147,30 @@ const Dashboard = () => {
                 className="fixed top-0 left-0 w-64 h-full bg-blue-900 text-white z-50 p-5 md:hidden"
             >
                 <button onClick={toggleDrawer} className="text-white text-2xl absolute top-4 right-4">
-                    ×
+                    <FaTimes />
                 </button>
-                {!isAdmin && (
-                    <>
-                        <h3 className="text-lg font-semibold text-gray-400 mt-4">User Links</h3>
-                        <nav className="flex flex-col space-y-4">
+
+                {/* ✅ Admin Toggle */}
+                {isAdmin && (
+                    <button
+                        className="flex items-center justify-center p-3 bg-yellow-500 text-black rounded-lg hover:bg-yellow-600 transition w-full mb-4"
+                        onClick={() => setShowAdminDashboard(!showAdminDashboard)}
+                    >
+                        {showAdminDashboard ? <FaUser className="mr-2" /> : <FaUserShield className="mr-2" />}
+                        {showAdminDashboard ? "Go to User Dashboard" : "Go to Admin Dashboard"}
+                    </button>
+                )}
+
+                {/* ✅ All Links (Admin or User Based on Toggle) */}
+                <div className="mt-10">
+                    {!isAdmin || !showAdminDashboard ? (
+                        <>
+                            <h3 className="text-lg font-semibold text-gray-400">User Links</h3>
                             <NavLink to="my-bookings" className={linkClasses}>
                                 <FaListAlt />
                                 <span>My Booking</span>
                             </NavLink>
-                            <NavLink to="payment-history" className={linkClasses}>
+                            <NavLink to="my-payments" className={linkClasses}>
                                 <FaHistory />
                                 <span>Payment History</span>
                             </NavLink>
@@ -163,14 +182,29 @@ const Dashboard = () => {
                                 <FaStar />
                                 <span>My Reviews</span>
                             </NavLink>
-                        </nav>
-                    </>
-                )}
-
-                {isAdmin && (
-                    <>
-                        <h3 className="text-lg font-semibold text-gray-400 mt-4">Admin Links</h3>
-                        <nav className="flex flex-col space-y-4">
+                            <h3 className="text-lg font-semibold text-gray-400">Shared Links</h3>
+                            <nav className="flex flex-col space-y-4">
+                                <NavLink to="/" className={linkClasses}>
+                                    <FaHome />
+                                    <span>Home</span>
+                                </NavLink>
+                                <NavLink to="/packages" className={linkClasses}>
+                                    <FaSuitcase />
+                                    <span>Packages</span>
+                                </NavLink>
+                                <NavLink to="/booking" className={linkClasses}>
+                                    <FaBook />
+                                    <span>Booking</span>
+                                </NavLink>
+                                <NavLink to="/contact" className={linkClasses}>
+                                    <FaPhone />
+                                    <span>Contact</span>
+                                </NavLink>
+                            </nav>
+                        </>
+                    ) : (
+                        <>
+                            <h3 className="text-lg font-semibold text-gray-400">Admin Links</h3>
                             <NavLink to="users" className={linkClasses}>
                                 <FaUsers />
                                 <span>Users</span>
@@ -178,6 +212,10 @@ const Dashboard = () => {
                             <NavLink to="all-reviews" className={linkClasses}>
                                 <FaClipboardList />
                                 <span>All Reviews</span>
+                            </NavLink>
+                            <NavLink to="all-bookings" className={linkClasses}>
+                                <FaClipboardList />
+                                <span>All Bookings</span>
                             </NavLink>
                             <NavLink to="all-payments" className={linkClasses}>
                                 <FaMoneyCheckAlt />
@@ -195,35 +233,39 @@ const Dashboard = () => {
                                 <FaCalendarPlus />
                                 <span>Add Itinerary</span>
                             </NavLink>
-                        </nav>
-                    </>
-                )}
-
-                <h3 className="text-lg font-semibold text-gray-400">Shared Links</h3>
-                <nav className="flex flex-col space-y-4 mt-10">
-                    <NavLink to="/" className={linkClasses}>
-                        <FaHome />
-                        <span>Home</span>
-                    </NavLink>
-                    <NavLink to="/packages" className={linkClasses}>
-                        <FaSuitcase />
-                        <span>Packages</span>
-                    </NavLink>
-                    <NavLink to="/booking" className={linkClasses}>
-                        <FaBook />
-                        <span>Booking</span>
-                    </NavLink>
-                    <NavLink to="/contact" className={linkClasses}>
-                        <FaPhone />
-                        <span>Contact</span>
-                    </NavLink>
-                </nav>
+                            <h3 className="text-lg font-semibold text-gray-400">Shared Links</h3>
+                            <nav className="flex flex-col space-y-4">
+                                <NavLink to="/" className={linkClasses}>
+                                    <FaHome />
+                                    <span>Home</span>
+                                </NavLink>
+                                <NavLink to="/packages" className={linkClasses}>
+                                    <FaSuitcase />
+                                    <span>Packages</span>
+                                </NavLink>
+                                <NavLink to="/booking" className={linkClasses}>
+                                    <FaBook />
+                                    <span>Booking</span>
+                                </NavLink>
+                                <NavLink to="/contact" className={linkClasses}>
+                                    <FaPhone />
+                                    <span>Contact</span>
+                                </NavLink>
+                            </nav>
+                        </>
+                    )}
+                </div>
             </motion.div>
 
-            {/* Main Content with Outlet */}
+            {/* ✅ Main Content */}
             <div className="flex-1 p-4 md:p-10">
                 <Outlet />
             </div>
+
+            {/* ✅ Drawer Toggle Button for Small Screens */}
+            <button onClick={toggleDrawer} className="md:hidden fixed top-4 left-4 bg-blue-900 text-white p-3 rounded-full">
+                <FaBars />
+            </button>
         </div>
     );
 };
