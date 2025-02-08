@@ -8,10 +8,14 @@ import Newsletter from '../components/Newsletter';
 import FAQSection from '../components/FAQSection';
 import ServicesSection from '../components/ServicesSection';
 import CallToAction from '../components/CallToAction';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
     return (
         <div>
+            <Helmet>
+                <title>Home || TravelGo</title>
+            </Helmet>
             <ParallaxBanner backgroundImage={bgImg} title={'Discover Your Next Adventure'} subtitle={'Explore breathtaking destinations, unforgettable experiences, and curated travel packages just for you'} buttonText={'Find Your Trip'}></ParallaxBanner>
             <PopularDestination></PopularDestination>
             <FeaturedPackages></FeaturedPackages>

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Rating from 'react-rating';  // Import React Rating
 import { AuthContext } from '../context/AuthContext'
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 // import { toast } from "react-toastify";
 
 const PackageDetails = () => {
@@ -70,6 +71,9 @@ const PackageDetails = () => {
 
     return (
         <div className="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+            <Helmet>
+                <title>PackageDetails || TravelGo</title>
+            </Helmet>
             {/* Main Package Section */}
             <div className="flex flex-col items-center md:flex-row gap-6 mb-10">
                 {/* Left Side - Image */}

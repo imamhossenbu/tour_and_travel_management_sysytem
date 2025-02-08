@@ -14,6 +14,8 @@ import AddPackages from "../Pages/Dashboard/Admins/AddPackages";
 import DestinationDetails from "../Pages/DestinationDetails";
 import AddItinerary from "../Pages/Dashboard/Admins/AddItinerary";
 import PackageDetails from "../Pages/PackageDetails";
+import AllReviews from "../Pages/Dashboard/Admins/AllReviews";
+import MyWishList from "../Pages/Dashboard/Users/MyWishList";
 
 export const router = createBrowserRouter([
     {
@@ -60,6 +62,10 @@ export const router = createBrowserRouter([
         element: <Dashboard></Dashboard>,
         children: [
             {
+                path:'wishlist',
+                element:<MyWishList></MyWishList>
+            },
+            {
                 path: 'users',
                 element: <AllUsers></AllUsers>
             },
@@ -74,6 +80,10 @@ export const router = createBrowserRouter([
             {
                 path:'add-itinerary',
                 element:<AddItinerary></AddItinerary>
+            },
+            {
+                path:'all-reviews',
+                element:<AllReviews></AllReviews>
             }
           
         ]

@@ -11,28 +11,6 @@ const Navbar = () => {
   // const [carts, setCarts] = useState(0);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
-  // const axiosPublic = useAxiosPublic();
-
-  console.log(user);
-  // const fetchWishlist = () => {
-  //   if (user?.uid) {  
-  //     axiosPublic.get(`/wishlist/${user.uid}`)
-  //       .then((res) => {
-  //         setCarts(res.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching wishlist:", error);
-  //       });
-  //   }
-  // };
-  
-  // // Call `fetchWishlist` on component mount and when `user.uid` changes
-  // useEffect(() => {
-  //   fetchWishlist();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [user?.uid]);
-  
-
   console.log(carts);
 
   const handleLogOut = () => {

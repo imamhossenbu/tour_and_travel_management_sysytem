@@ -2,6 +2,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { Helmet } from "react-helmet";
 
 const DestinationDetails = () => {
   const { id } = useParams(); // Get destination id from the URL
@@ -44,6 +45,9 @@ const DestinationDetails = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
+      <Helmet>
+        <title>Destination Details || TravelGo</title>
+      </Helmet>
       {/* Destination Details Section */}
       <motion.div
         className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden mb-10"

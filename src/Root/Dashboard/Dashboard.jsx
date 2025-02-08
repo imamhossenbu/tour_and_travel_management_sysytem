@@ -1,10 +1,11 @@
 import { useContext, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { FaBars, FaSignOutAlt, FaListAlt, FaHeart, FaHistory, FaStar, FaPlus, FaUsers, FaCommentsDollar, FaClipboardList, FaMoneyCheckAlt, FaBoxOpen, FaMapMarkerAlt, FaHome, FaSuitcase, FaBook, FaPhone, FaCalendarPlus } from "react-icons/fa";
+import { FaBars, FaSignOutAlt, FaListAlt, FaHeart, FaHistory, FaStar, FaUsers, FaClipboardList, FaMoneyCheckAlt, FaBoxOpen, FaMapMarkerAlt, FaHome, FaSuitcase, FaBook, FaPhone, FaCalendarPlus } from "react-icons/fa";
 import { motion } from "framer-motion";
 import useAdmin from "../../Hooks/useAdmin";
 import { AuthContext } from "../../context/AuthContext";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const Dashboard = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -32,6 +33,9 @@ const Dashboard = () => {
 
     return (
         <div className="flex min-h-screen bg-gray-100">
+            <Helmet>
+                <title>Dashboard || TravelGo</title>
+            </Helmet>
 
             {/* Sidebar for Medium to Large Screens */}
             <aside className="hidden md:flex flex-col w-64 bg-blue-900 text-white p-5 space-y-6">
@@ -54,11 +58,7 @@ const Dashboard = () => {
                             </NavLink>
                             <NavLink to="wishlist" className={linkClasses}>
                                 <FaHeart />
-                                <span>Wishlist</span>
-                            </NavLink>
-                            <NavLink to="add-review" className={linkClasses}>
-                                <FaPlus />
-                                <span>Add Review</span>
+                                <span>My Wishlist</span>
                             </NavLink>
                             <NavLink to="my-reviews" className={linkClasses}>
                                 <FaStar />
@@ -80,10 +80,6 @@ const Dashboard = () => {
                             <NavLink to="all-reviews" className={linkClasses}>
                                 <FaClipboardList />
                                 <span>All Reviews</span>
-                            </NavLink>
-                            <NavLink to="all-wishlist" className={linkClasses}>
-                                <FaCommentsDollar />
-                                <span>All Wishlist</span>
                             </NavLink>
                             <NavLink to="all-payments" className={linkClasses}>
                                 <FaMoneyCheckAlt />
@@ -161,11 +157,7 @@ const Dashboard = () => {
                             </NavLink>
                             <NavLink to="wishlist" className={linkClasses}>
                                 <FaHeart />
-                                <span>Wishlist</span>
-                            </NavLink>
-                            <NavLink to="add-review" className={linkClasses}>
-                                <FaPlus />
-                                <span>Add Review</span>
+                                <span>My Wishlist</span>
                             </NavLink>
                             <NavLink to="my-reviews" className={linkClasses}>
                                 <FaStar />
@@ -186,10 +178,6 @@ const Dashboard = () => {
                             <NavLink to="all-reviews" className={linkClasses}>
                                 <FaClipboardList />
                                 <span>All Reviews</span>
-                            </NavLink>
-                            <NavLink to="all-wishlist" className={linkClasses}>
-                                <FaCommentsDollar />
-                                <span>All Wishlist</span>
                             </NavLink>
                             <NavLink to="all-payments" className={linkClasses}>
                                 <FaMoneyCheckAlt />

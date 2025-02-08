@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import ParallaxBanner from "../Shared/ParallaxBanner";
 import bgImg from '../assets/bg-4.jpg'
 import ContactPage from "../components/ContactPage";
@@ -5,6 +6,9 @@ import ContactPage from "../components/ContactPage";
 const Contact = () => {
     return (
         <div>
+            <Helmet>
+                <title>Contact || TravelGo</title>
+            </Helmet>
             <ParallaxBanner backgroundImage={bgImg} title={'Travel Assistance Anytime, Anywhere'} subtitle={'If you need urgent support during your trip, our 24/7 team is here to help.'} buttonText={'Get Immediate Help'}></ParallaxBanner>
             <ContactPage></ContactPage>
         </div>
