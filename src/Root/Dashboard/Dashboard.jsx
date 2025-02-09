@@ -17,7 +17,7 @@ const Dashboard = () => {
     const handleLogOut = () => {
         logOut()
             .then(() => {
-                Swal.fire('Log out successful');
+                Swal.fire('Success','Log out successful','success');
                 navigate('/');
             });
     };

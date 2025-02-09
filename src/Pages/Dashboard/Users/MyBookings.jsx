@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import {  FaCreditCard, FaClock, FaTimes } from "react-icons/fa";
+import { FaCreditCard, FaClock, FaTimes } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../context/AuthContext";
@@ -162,6 +162,14 @@ const MyBookings = () => {
                                             className="bg-red-500 text-white py-2 px-3 rounded-lg hover:bg-red-600 transition flex items-center gap-2"
                                         >
                                             <FaTimes /> Request Cancellation
+                                        </button>
+                                    )}
+                                    {booking.status === "Cancelled with Refund" && (
+                                        <button
+                                            onClick={() => handlePayment(booking.booking_id)}
+                                            className="bg-green-500 text-white py-2 px-3 rounded-lg hover:bg-green-600 transition flex items-center gap-2"
+                                        >
+                                           <FaCreditCard /> Pay Again 
                                         </button>
                                     )}
                                 </td>

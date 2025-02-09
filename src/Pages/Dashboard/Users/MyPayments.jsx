@@ -22,39 +22,6 @@ const MyPayments = () => {
             });
     }, [axiosPublic, user?.email]);
 
-    // ✅ View Payment Details
-    const handleViewDetails = (paymentId) => {
-        Swal.fire({
-            title: "Payment Details",
-            text: `Show details for Payment ID: ${paymentId}`,
-            icon: "info",
-        });
-    };
-
-    // ✅ Cancel Refund Request (if any)
-    const handleCancelRefund = (paymentId) => {
-        Swal.fire({
-            title: "Cancel Refund Request?",
-            text: "Are you sure you want to cancel this refund request?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, Cancel Refund"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosPublic.patch(`/user/payments/cancel-refund/${paymentId}`)
-                    .then(() => {
-                        setPayments(payments.map(payment =>
-                            payment.payment_id === paymentId ? { ...payment, refund_status: "Refund Cancelled" } : payment
-                        ));
-                        Swal.fire("Cancelled!", "Refund request has been cancelled.", "success");
-                    })
-                    .catch(err => console.error("Error cancelling refund:", err));
-            }
-        });
-    };
-
     return (
         <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg">
             <h3 className="text-2xl font-bold text-center mb-6 text-blue-700">My Payments</h3>

@@ -66,7 +66,6 @@ const Booking = () => {
                 setTravelDate("")
                 setPhone("")
                 setTotalPrice(0);
-                setPackages([])
             })
             .catch(err => console.error("Error creating booking:", err));
     };
