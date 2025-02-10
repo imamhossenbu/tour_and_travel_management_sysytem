@@ -10,14 +10,14 @@ import { Helmet } from "react-helmet";
 const Dashboard = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const { isAdmin } = useAdmin();
-    const { logOut } = useContext(AuthContext);
+    const { logOut, loading } = useContext(AuthContext);
     const navigate = useNavigate();
     const [showAdminDashboard, setShowAdminDashboard] = useState(true); // ✅ Toggle between Admin & User Dashboard
 
     const handleLogOut = () => {
         logOut()
             .then(() => {
-                Swal.fire('Success','Log out successful','success');
+                Swal.fire('Success', 'Log out successful', 'success');
                 navigate('/');
             });
     };
@@ -31,6 +31,10 @@ const Dashboard = () => {
         isActive
             ? "flex items-center space-x-2 p-3 bg-blue-700 text-white rounded-lg"
             : "flex items-center space-x-2 p-3 hover:bg-blue-700 text-gray-300 rounded-lg";
+
+    if (loading) {
+        return <><h2>loading....</h2></>
+    }
 
     return (
         <div className="flex min-h-screen bg-gray-100">

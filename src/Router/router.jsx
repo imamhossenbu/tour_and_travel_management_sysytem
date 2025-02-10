@@ -31,6 +31,7 @@ import AllPayments from "../Pages/Dashboard/Admins/AllPayments";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute"; // 🔹 New Admin Route
 import PaymentSuccess from "../Pages/PaymentSuccess";
+import WishlistBook from "../Pages/Dashboard/Users/WishlistBook";
 
 export const router = createBrowserRouter([
     {
@@ -64,6 +65,7 @@ export const router = createBrowserRouter([
             { path: "my-reviews", element: <MyReviews /> },
             { path: "my-bookings", element: <MyBookings /> },
             { path: "my-payments", element: <MyPayments /> },
+            {path:'wishlist-book/:id',element:<WishlistBook></WishlistBook>},
 
             // 🔥 Admin Routes - Only Accessible to Admins
             {

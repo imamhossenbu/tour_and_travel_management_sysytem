@@ -7,13 +7,13 @@ import useAxiosPublic from "../Hooks/useAxiosPublic";
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
-
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [carts ,setCarts] = useState([]);
+    const [loading, setLoading] = useState(true); // Loading state for auth
+    const [carts, setCarts] = useState([]);
     const axiosPublic = useAxiosPublic();
 
-
+    // Fetch Wishlist
     const fetchWishlist = (userId) => {
         if (userId) {
             axiosPublic.get(`/wishlist/${userId}`)
@@ -22,15 +22,14 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-    // ✅ Add to wishlist and update state immediately
+    // Add to Wishlist
     const addToWishlist = (packageId) => {
         if (!user?.uid) return;
 
         const wishlistData = { uid: user?.uid };
-
         axiosPublic.post(`/wishlist/${packageId}`, wishlistData)
             .then(() => {
-                setCarts([...carts, { id: packageId, uid: user?.uid }]); // ✅ Update UI instantly
+                setCarts([...carts, { id: packageId, uid: user?.uid }]);
             })
             .catch((err) => console.error("Error adding to wishlist:", err));
     };
@@ -41,54 +40,62 @@ const AuthProvider = ({ children }) => {
         }
     }, [user?.uid]);
 
-
+    // Log in User
     const loginUser = (email, password) => {
-        return signInWithEmailAndPassword(auth, email, password);
-    }
+        setLoading(true); // Start loading while logging in
+        return signInWithEmailAndPassword(auth, email, password)
+            .finally(() => setLoading(false)); // Stop loading after login
+    };
 
-
+    // Sign up User
     const signUp = (email, password) => {
-        return createUserWithEmailAndPassword(auth, email, password);
-    }
+        setLoading(true); // Start loading while signing up
+        return createUserWithEmailAndPassword(auth, email, password)
+            .finally(() => setLoading(false)); // Stop loading after sign up
+    };
 
-
+    // Update User Profile
     const updateUser = (name, photo) => {
-            return updateProfile(auth.currentUser, {
-                displayName: name,
-                photoURL: photo
-            });
-    }
+        return updateProfile(auth.currentUser, { displayName: name, photoURL: photo });
+    };
 
-
+    // Log out
     const logOut = () => {
-        return signOut(auth);
-    }
+        setLoading(true); // Start loading while logging out
+        return signOut(auth)
+            .finally(() => setLoading(false)); // Stop loading after logout
+    };
 
-
+    // Google Sign In
     const googleSignIn = () => {
+        setLoading(true); // Start loading while signing in with Google
         return signInWithPopup(auth, googleProvider)
-    }
+            .finally(() => setLoading(false)); // Stop loading after Google sign in
+    };
 
+    // GitHub Sign In
     const githubLogin = () => {
+        setLoading(true); // Start loading while signing in with GitHub
         return signInWithPopup(auth, githubProvider)
-    }
+            .finally(() => setLoading(false)); // Stop loading after GitHub sign in
+    };
 
-
+    // Firebase onAuthStateChanged to handle session persistence
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setUser(user)
-        })
+            setUser(user);
+            setLoading(false); // Stop loading once authentication state is checked
+        });
 
-
+        // Cleanup the listener when component is unmounted
         return () => {
             unsubscribe();
-        }
-    }, [])
-
-
+        };
+    }, []); // Empty dependency ensures this runs only once on mount
 
     const userInfo = {
         user,
+        loading, // Provide loading state to context
         loginUser,
         signUp,
         logOut,
@@ -97,7 +104,8 @@ const AuthProvider = ({ children }) => {
         updateUser,
         addToWishlist,
         carts
-    }
+    };
+
     return (
         <AuthContext.Provider value={userInfo}>
             {children}

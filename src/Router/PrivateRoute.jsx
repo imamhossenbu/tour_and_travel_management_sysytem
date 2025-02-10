@@ -17,9 +17,17 @@ const PrivateRoute = ({ children }) => {
 
     if (loading) {
         return (
-            <div className="max-w-4xl mx-auto p-6">
-                <Skeleton height={40} width={200} />
-                <Skeleton height={30} count={3} />
+            <div className="flex justify-center items-center min-h-screen bg-gray-100">
+                <div className="flex flex-col items-center space-y-4 p-6 bg-white rounded-lg shadow-lg">
+                    <Skeleton height={40} width={400} />
+                    <Skeleton height={40} width={400} />
+                    <Skeleton height={40} width={400} />
+                    <Skeleton height={40} width={400} />
+                    <Skeleton height={40} width={400} />
+                    <Skeleton height={30} width={400} />
+                    <Skeleton height={30} width={400} />
+                    <Skeleton height={30} width={400} />
+                </div>
             </div>
         );
     }
