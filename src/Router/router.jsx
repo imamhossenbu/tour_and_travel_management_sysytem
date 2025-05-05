@@ -32,6 +32,7 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute"; // 🔹 New Admin Route
 import PaymentSuccess from "../Pages/PaymentSuccess";
 import WishlistBook from "../Pages/Dashboard/Users/WishlistBook";
+import AllMessages from "../Pages/Dashboard/Admins/AllMessages";
 
 export const router = createBrowserRouter([
     {
@@ -95,6 +96,10 @@ export const router = createBrowserRouter([
             {
                 path: "all-payments",
                 element: <AdminRoute><AllPayments /></AdminRoute>,
+            },
+            {
+                path: "all-messages",
+                element: <AdminRoute><AllMessages /></AdminRoute>,
             },
         ],
     },

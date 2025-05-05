@@ -89,7 +89,7 @@ const Navbar = () => {
                 {isUserMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2">
                     <NavLink
-                      to="/dashboard"
+                    to="/dashboard"
                       className="block px-6 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => setIsUserMenuOpen(false)}
                     >

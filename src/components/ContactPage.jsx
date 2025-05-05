@@ -1,7 +1,48 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import useAxiosPublic from '../Hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
 
 const ContactPage = () => {
+    const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const axiosPublic = useAxiosPublic();
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+    
+        try {
+            const response = await axiosPublic.post("/api/contact", formData);
+    
+            // Success Alert
+            Swal.fire({
+                icon: "success",
+                title: "Message Sent!",
+                text: response.data.message,
+                confirmButtonColor: "#3085d6",
+            });
+    
+            setFormData({ name: "", email: "", message: "" });
+    
+        } catch (error) {
+            // Error Alert
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Failed to send message. Please try again later.",
+                confirmButtonColor: "#d33",
+            });
+    
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
     return (
         <div className="py-16 bg-gray-100">
             <motion.div
@@ -17,29 +58,41 @@ const ContactPage = () => {
                     {/* Left Side - Contact Form */}
                     <motion.div className="bg-white p-8 rounded-lg shadow-lg">
                         <h3 className="text-2xl font-semibold text-gray-700 mb-6">Send Us a Message</h3>
-                        <form className="space-y-6">
+                        <form className="space-y-6" onSubmit={handleSubmit}>
                             <div>
                                 <label className="block text-gray-600 font-medium">Your Name</label>
                                 <input
                                     type="text"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                                     placeholder="Enter your name"
+                                    required
                                 />
                             </div>
                             <div>
                                 <label className="block text-gray-600 font-medium">Your Email</label>
                                 <input
                                     type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                                     placeholder="Enter your email"
+                                    required
                                 />
                             </div>
                             <div>
                                 <label className="block text-gray-600 font-medium">Your Message</label>
                                 <textarea
                                     rows="4"
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                                     placeholder="Enter your message"
+                                    required
                                 ></textarea>
                             </div>
                             <motion.button
@@ -47,8 +100,9 @@ const ContactPage = () => {
                                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-300"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
+                                disabled={isSubmitting}
                             >
-                                Send Message
+                                {isSubmitting ? "Sending..." : "Send Message"}
                             </motion.button>
                         </form>
                     </motion.div>

@@ -1,13 +1,15 @@
 import axios from "axios";
 
+const baseURL = import.meta.env.MODE === "production"
+    ? "https://tour-and-travel-server-u4mq.vercel.app"
+    : "http://localhost:5000";
+
 const axiosPublic = axios.create({
-    baseURL:'http://localhost:5000/' 
-})
+    baseURL
+});
 
 const useAxiosPublic = () => {
-    return (
-        axiosPublic
-    );
+    return axiosPublic;
 };
 
 export default useAxiosPublic;

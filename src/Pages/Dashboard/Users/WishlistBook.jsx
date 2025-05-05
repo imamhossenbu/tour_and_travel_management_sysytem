@@ -73,7 +73,7 @@ const WishlistBook = () => {
           "Booking Confirmed! Redirecting to payment...",
           "success"
         );
-        navigate("/dashboard/my-bookings");
+        navigate("/dashboard/my-bookings"); 
       })
       .catch((err) => console.error("Error creating booking:", err));
   };
