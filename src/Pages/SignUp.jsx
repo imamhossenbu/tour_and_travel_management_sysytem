@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { FaGoogle, FaGithub, FaEye, FaEyeSlash } from 'react-icons/fa';
 import bgImage from '../assets/bg.jpg';
-import signUpImage from '../../src/assets/signup.png';
+import signUpImage from '../../src/assets/SignUp.png';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import Swal from 'sweetalert2';
