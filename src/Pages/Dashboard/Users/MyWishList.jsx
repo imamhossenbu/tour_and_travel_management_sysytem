@@ -7,7 +7,7 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom"; // ✅ Redirect to payment page
 
 const MyWishList = () => {
-  const { user } = useContext(AuthContext);
+  const { user, handleDelete } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   const [wishlist, setWishlist] = useState([]);
   const navigate = useNavigate(); // ✅ For redirecting to the payment page
@@ -26,28 +26,28 @@ const MyWishList = () => {
   console.log(wishlist);
 
   // ✅ Handle delete wishlist item
-  const handleDelete = (id) => {
-    console.log(id);
-    Swal.fire({
-      title: "Are you sure?",
-      text: "This item will be removed from your wishlist!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, remove it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosPublic
-          .delete(`/wishlist/${id}`)
-          .then(() => {
-            setWishlist(wishlist.filter((item) => item.wishlist_id !== id));
-            Swal.fire("Removed!", "Item removed from wishlist.", "success");
-          })
-          .catch((err) => console.error("Error deleting wishlist item:", err));
-      }
-    });
-  };
+  // const handleDelete = (id) => {
+  //   console.log(id);
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "This item will be removed from your wishlist!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#d33",
+  //     cancelButtonColor: "#3085d6",
+  //     confirmButtonText: "Yes, remove it!",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axiosPublic
+  //         .delete(`/wishlist/${id}`)
+  //         .then(() => {
+  //           setWishlist(wishlist.filter((item) => item.wishlist_id !== id));
+  //           Swal.fire("Removed!", "Item removed from wishlist.", "success");
+  //         })
+  //         .catch((err) => console.error("Error deleting wishlist item:", err));
+  //     }
+  //   });
+  // };
 
   // ✅ Handle payment redirection
   const handleBook = (id) => {

@@ -1,23 +1,27 @@
-import { useContext,  useState } from 'react';
+import { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes, FaHome, FaSuitcase, FaPhone, FaBook, FaShoppingCart } from 'react-icons/fa';
 import { AuthContext } from '../context/AuthContext';
 import { toast } from 'react-toastify';
-// import useAxiosPublic from '../Hooks/useAxiosPublic';
 
 const Navbar = () => {
-  const { user, logOut , carts} = useContext(AuthContext);
+  const { user, logOut, wishlist } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
-  // const [carts, setCarts] = useState(0);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
-  console.log(carts);
+
+  // Console log the wishlist from context to verify its content
+  console.log("Navbar Wishlist from Context:", wishlist);
 
   const handleLogOut = () => {
     logOut()
       .then(() => {
         navigate('/');
         toast('Log out successful');
+      })
+      .catch(error => {
+        console.error("Error logging out:", error);
+        toast.error("Logout failed!");
       });
   };
 
@@ -64,9 +68,10 @@ const Navbar = () => {
             {user && (
               <NavLink to="/dashboard/wishlist" className="relative text-white hover:text-yellow-300 transition-all duration-300">
                 <FaShoppingCart className="h-8 w-8" />
-                {carts?.length >= 0 && (
+                {/* Only show count if wishlist is an array and has items */}
+                {wishlist && wishlist.length > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-2 py-1">
-                    {carts.length}
+                    {wishlist.length}
                   </span>
                 )}
               </NavLink>
@@ -82,14 +87,14 @@ const Navbar = () => {
             ) : (
               <div className="relative cursor-pointer" onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
                 <img
-                  src={user?.photoURL}
+                  src={user?.photoURL || "https://via.placeholder.com/150/0000FF/FFFFFF?text=User"} // Fallback image
                   alt="User"
-                  className="h-12 w-12 rounded-full border-2 border-yellow-300"
+                  className="h-12 w-12 rounded-full border-2 border-yellow-300 object-cover"
                 />
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2">
+                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2 z-10">
                     <NavLink
-                    to="/dashboard"
+                      to="/dashboard"
                       className="block px-6 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => setIsUserMenuOpen(false)}
                     >
@@ -141,9 +146,9 @@ const Navbar = () => {
           {user && (
             <NavLink to="/dashboard/wishlist" className="relative text-white hover:text-yellow-300 transition-all duration-300">
               <FaShoppingCart className="h-8 w-8" />
-              {carts?.length >= 0 && (
+              {wishlist && wishlist.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-2 py-1">
-                  {carts.length}
+                  {wishlist.length}
                 </span>
               )}
             </NavLink>
@@ -160,9 +165,9 @@ const Navbar = () => {
           ) : (
             <div className="text-center">
               <img
-                src={user?.photoURL}
+                src={user?.photoURL || "https://via.placeholder.com/150/0000FF/FFFFFF?text=User"} // Fallback image
                 alt="User"
-                className="h-12 w-12 rounded-full border-2 border-yellow-300 mx-auto mb-4"
+                className="h-12 w-12 rounded-full border-2 border-yellow-300 mx-auto mb-4 object-cover"
               />
               <NavLink
                 to="/dashboard"

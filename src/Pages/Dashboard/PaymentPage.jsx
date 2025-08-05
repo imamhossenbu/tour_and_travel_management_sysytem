@@ -8,12 +8,16 @@ const PaymentPage = () => {
     const { bookingId } = useParams(); // Get bookingId from URL params
     const axiosPublic = useAxiosPublic();
     const { user } = useContext(AuthContext);
+
+
+    console.log(user);
     const [booking, setBooking] = useState(null); // State to store booking data
     console.log('Booking ID:', bookingId); // For debugging, check the bookingId
     console.log(booking);
     // Fetch booking details when component mounts
     useEffect(() => {
         if (!bookingId) return;
+
 
         axiosPublic.get(`/bookings/details/${bookingId}`)
             .then((res) => {
@@ -45,8 +49,9 @@ const PaymentPage = () => {
         // Send request to initiate SSLCommerz Payment
         axiosPublic.post("/sslcommerz/initiate", paymentData)
             .then((res) => {
-                if (res.data?.GatewayPageURL) {
-                    window.location.href = res.data.GatewayPageURL; // Redirect to SSLCommerz
+                if (res.data?.url) {
+                    console.log(res.data?.url);
+                    window.location.href = res.data.url; // Redirect to SSLCommerz
                 } else {
                     Swal.fire("Error", "Payment gateway initialization failed!", "error");
                 }
